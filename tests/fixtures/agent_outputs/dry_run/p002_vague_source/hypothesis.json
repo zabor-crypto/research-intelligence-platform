@@ -1,0 +1,76 @@
+{
+  "source_archetype": "generic_signal",
+  "generated_archetype": "unknown",
+  "core_alpha_triggers": [],
+  "preserved_alpha_triggers": [],
+  "dropped_alpha_triggers": [],
+  "archetype_fidelity": "strong",
+  "source_entry_conditions": [],
+  "generated_entry_conditions": [
+    "REVIEW ONLY: source does not specify a codable entry rule; missing: entry threshold, lookback window, exit condition, codable entry/exit rules, transaction cost assumptions"
+  ],
+  "preserved_entry_conditions": [],
+  "dropped_entry_conditions": [],
+  "entry_condition_fidelity": "strong",
+  "hypothesis_id": "hyp-a8f9c2f62a",
+  "source_ids": [
+    ""
+  ],
+  "hypothesis_name": "UNGROUNDED IDEA: Crypto Adaptation Candidate (from: The AI Alpha Revolution in Crypto)",
+  "one_sentence_idea": "The documented effect may transfer to liquid crypto markets at non-HFT horizons; test the closest crypto analog.",
+  "market": "crypto",
+  "asset_universe": "",
+  "timeframe": "1h-4h",
+  "strategy_style": "generic",
+  "core_alpha_hypothesis": "The documented effect may transfer to liquid crypto markets at non-HFT horizons; test the closest crypto analog.",
+  "required_data": [
+    "ohlcv"
+  ],
+  "features": [],
+  "source_asset_universe": "",
+  "source_timeframe": "",
+  "source_risk_parameters": {},
+  "source_cost_parameters": {},
+  "entry_rules": [
+    "REVIEW ONLY: source does not specify a codable entry rule; missing: entry threshold, lookback window, exit condition, codable entry/exit rules, transaction cost assumptions"
+  ],
+  "exit_rules": [
+    "REVIEW ONLY: source does not specify a codable exit rule"
+  ],
+  "risk_rules": [
+    "REVIEW ONLY: source specifies no risk management"
+  ],
+  "position_sizing": "",
+  "fees_slippage_model": "",
+  "strategy_parameters": {},
+  "parameter_provenance": {},
+  "feature_formulas": {},
+  "parameter_source_quality": "missing",
+  "parameterization_status": "unparameterized",
+  "missing_for_backtest": [
+    "entry threshold",
+    "lookback window",
+    "exit condition",
+    "codable entry/exit rules",
+    "transaction cost assumptions"
+  ],
+  "candidate_export_allowed": false,
+  "backtest_spec_export_allowed": false,
+  "source_reported_metrics": {},
+  "order_assumptions": "",
+  "baseline_comparisons": [],
+  "optimization_constraints": [],
+  "expected_failure_modes": [],
+  "minimum_viable_backtest": "",
+  "optimization_parameters": {},
+  "walk_forward_validation_plan": "",
+  "anti_overfitting_checks": [],
+  "priority_score": 0,
+  "status": "rejected_unbacktestable",
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "original_source_has_latency_dependency": false,
+  "adapted_to_non_hft": false,
+  "adaptation_validity": "not_needed",
+  "non_hft_adaptation": ""
+}

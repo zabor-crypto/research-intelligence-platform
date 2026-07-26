@@ -1,0 +1,145 @@
+{
+  "source_archetype": "non_hft_market_making",
+  "generated_archetype": "non_hft_market_making",
+  "core_alpha_triggers": [],
+  "preserved_alpha_triggers": [],
+  "dropped_alpha_triggers": [],
+  "archetype_fidelity": "strong",
+  "source_entry_conditions": [],
+  "generated_entry_conditions": [
+    "Quote both sides only when book_spread > 2.0x rv_60m; refresh quotes every 30 seconds and skew against current inventory"
+  ],
+  "preserved_entry_conditions": [],
+  "dropped_entry_conditions": [],
+  "entry_condition_fidelity": "strong",
+  "hypothesis_id": "hyp-210507e33d",
+  "source_ids": [
+    ""
+  ],
+  "hypothesis_name": "Slow Inventory-Aware Quoting Module (from: Adverse Selection Avoidance in Passive Crypto Execution (Wor)",
+  "one_sentence_idea": "Spread capture with inventory-risk-based quote skew is viable at seconds-to-minutes cadence when spreads are wide relative to volatility.",
+  "market": "crypto",
+  "asset_universe": "BTC, ETH perpetuals",
+  "source_asset_universe": "",
+  "generated_asset_universe": "BTC, ETH perpetuals",
+  "asset_universe_provenance": "default",
+  "optional_robustness_universe": "",
+  "timeframe": "1m-15m",
+  "source_timeframe": "",
+  "generated_timeframe": "1m-15m",
+  "timeframe_provenance": "default",
+  "source_risk_parameters": {},
+  "generated_risk_parameters": {
+    "risk_per_trade_pct": 1,
+    "portfolio_vol_target_pct": 15,
+    "drawdown_derisk_30d_pct": 10
+  },
+  "risk_parameter_provenance": {
+    "risk_per_trade_pct": "default",
+    "portfolio_vol_target_pct": "default",
+    "drawdown_derisk_30d_pct": "default"
+  },
+  "source_cost_parameters": {},
+  "generated_cost_parameters": {
+    "fee_slippage_bps_per_side": 7
+  },
+  "cost_parameter_provenance": {
+    "fee_slippage_bps_per_side": "default"
+  },
+  "unmapped_extracted_parameters": {},
+  "strategy_style": "market_making",
+  "core_alpha_hypothesis": "Spread capture with inventory-risk-based quote skew is viable at seconds-to-minutes cadence when spreads are wide relative to volatility.",
+  "required_data": [
+    "order_book_snapshots"
+  ],
+  "features": [
+    "order_book_snapshots"
+  ],
+  "entry_rules": [
+    "Quote both sides only when book_spread > 2.0x rv_60m; refresh quotes every 30 seconds and skew against current inventory"
+  ],
+  "exit_rules": [
+    "Withdraw quotes and unwind passively when inventory > 5% of capital (hard stop)",
+    "Exit on regime transition: withdraw quotes when rv_60m regime turns high-volatility"
+  ],
+  "risk_rules": [
+    "max position risk 1% of equity per trade (default)",
+    "portfolio-level volatility target 15% annualized (default)",
+    "de-risk 50% when 30-day drawdown exceeds 10% (default)"
+  ],
+  "position_sizing": "risk 1% of equity per trade using stop distance 1.5x ATR_60m",
+  "fees_slippage_model": "taker 7 bps per side (fees + slippage); maker 1 bp where passive fills are realistic",
+  "strategy_parameters": {
+    "quote_refresh_seconds": 30,
+    "spread_vol_mult": 2.0,
+    "inventory_limit_pct": 5,
+    "vol_window_minutes": 60,
+    "fee_slippage_bps_per_side": 7
+  },
+  "parameter_provenance": {
+    "quote_refresh_seconds": "default",
+    "spread_vol_mult": "default",
+    "inventory_limit_pct": "default",
+    "vol_window_minutes": "default",
+    "fee_slippage_bps_per_side": "default"
+  },
+  "feature_formulas": {},
+  "parameter_source_quality": "missing",
+  "parameterization_status": "unparameterized",
+  "missing_for_backtest": [],
+  "candidate_export_allowed": false,
+  "backtest_spec_export_allowed": false,
+  "source_reported_metrics": {},
+  "order_assumptions": "market (taker) orders at next 1m bar open after signal; no partial fills modeled; execution latency tolerance >= 1 bar (non-HFT by construction)",
+  "baseline_comparisons": [
+    "buy-and-hold on the same universe",
+    "randomized-entry baseline with identical exits and sizing",
+    "unconditional variant (same rules without the regime/filter condition)"
+  ],
+  "expected_failure_modes": [
+    "edge is an artifact of survivorship or lookahead bias",
+    "signal decays after fees at the target timeframe",
+    "regime dependence: works only in trending/high-vol samples"
+  ],
+  "minimum_viable_backtest": "Primary: BTC, ETH perpetuals, 1m-15m bars (order_book_snapshots), over >=3 years including one bear market. Compare vs the baseline set (buy-and-hold, randomized-entry, unconditional variant).",
+  "optimization_parameters": {
+    "quote_refresh_seconds": [
+      15,
+      30,
+      45
+    ],
+    "spread_vol_mult": [
+      1.0,
+      2.0,
+      3.0
+    ],
+    "inventory_limit_pct": [
+      2,
+      5,
+      8
+    ],
+    "vol_window_minutes": [
+      30,
+      60,
+      90
+    ]
+  },
+  "optimization_constraints": [],
+  "walk_forward_validation_plan": "Rolling walk-forward: 12-month train / 3-month test, stepped quarterly; require positive OOS expectancy in >=60% of folds.",
+  "anti_overfitting_checks": [
+    "parameter-stability heatmap (edge must not live in one cell)",
+    "deflated Sharpe ratio on OOS results",
+    "test on assets not used for parameter selection"
+  ],
+  "priority_score": 0,
+  "status": "rejected_hft",
+  "hft_or_low_latency_dependency": true,
+  "non_applicable_reason": "requires_hft_or_low_latency_edge",
+  "original_source_has_latency_dependency": true,
+  "adapted_to_non_hft": false,
+  "adaptation_validity": "invalid",
+  "non_hft_adaptation": "",
+  "spec_consistency": "strong",
+  "consistency_failures": [],
+  "consistency_warnings": []
+}

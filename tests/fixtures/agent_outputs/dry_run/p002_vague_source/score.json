@@ -1,0 +1,21 @@
+{
+  "hypothesis_id": "hyp-a8f9c2f62a",
+  "dimensions": {
+    "crypto_relevance": 9.0,
+    "non_hft_compatibility": 9.0,
+    "data_availability": 9.0,
+    "backtest_feasibility": 2.0,
+    "signal_clarity": 2.0,
+    "expected_robustness": 6.0,
+    "novelty": 5.5,
+    "implementation_complexity": 5.0,
+    "overfitting_risk": 3.0,
+    "transaction_cost_sensitivity": 7.0,
+    "portfolio_diversification_value": 5.0,
+    "expected_edge_decay_risk": 6.0,
+    "source_evidence_quality": 2.0
+  },
+  "rationale": {
+    "summary": "heuristic mock scoring for style=generic, hft=False, evidence=2.0"
+  }
+}

@@ -1,0 +1,36 @@
+# Secrets and local config
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local data produced by the platform
+data/
+exports/
+reports/*.md
+!reports/implementation_summary.md
+
+# OS
+.DS_Store
+
+# Audit bundles (kept on disk, not in the repo)
+*.zip
+
+# Transient release-workflow outputs (created in the repo root by .github/workflows/release.yml;
+# never committed — their presence must not make the release gate see a dirty tree).
+preflight.json
+release_receipt.json
+validation_bundle.json
+validate_summary.json
+pytest_report.xml
+pytest_out.txt

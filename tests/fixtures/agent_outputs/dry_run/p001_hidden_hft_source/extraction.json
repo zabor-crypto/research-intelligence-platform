@@ -1,0 +1,48 @@
+{
+  "source_id": "",
+  "document_id": "",
+  "title": "Adverse Selection Avoidance in Passive Crypto Execution (Working Paper)",
+  "research_domain": "market_microstructure",
+  "asset_class": "crypto",
+  "market_type": "perpetual_futures",
+  "timeframe": "unspecified",
+  "strategy_style": "market_making",
+  "alpha_mechanism": "Spread capture with inventory-risk-based quote skew is viable at seconds-to-minutes cadence when spreads are wide relative to volatility.",
+  "signal_description": "# Adverse Selection Avoidance in Passive Crypto Execution (Working Paper)",
+  "features": [
+    "order_book_snapshots"
+  ],
+  "indicators": [],
+  "entry_logic": "",
+  "exit_logic": "",
+  "risk_management": "",
+  "position_sizing": "",
+  "data_requirements": [
+    "order_book_snapshots"
+  ],
+  "extracted_parameters": {},
+  "parameter_source_quality": "missing",
+  "source_rule_quality": "vague",
+  "source_data_quality": "partial",
+  "source_evidence_type": "abstract_only",
+  "source_asset_universe": "",
+  "source_risk_parameters": {},
+  "source_cost_parameters": {},
+  "source_entry_conditions": [],
+  "transaction_cost_assumptions": "explicit costs modeled",
+  "market_regime_conditions": "",
+  "reported_metrics": {},
+  "limitations": [
+    "results may not survive transaction costs"
+  ],
+  "implementation_complexity": "medium",
+  "crypto_transferability": "not_transferable_latency_edge",
+  "hft_or_low_latency_dependency": true,
+  "non_applicable_reason": "requires_hft_or_low_latency_edge",
+  "backtestability": "medium",
+  "falsification_tests": [
+    "signal has no predictive power out-of-sample",
+    "edge disappears after realistic fees and slippage"
+  ],
+  "notes": "mock extraction; style=market_making; hft markers: ['react\\\\w*\\\\s+within\\\\s+(?:the\\\\s+same|one|a\\\\s+single)\\\\s+(?:order.?book\\\\s+)?(?:update|tick)', 'lose\\\\w*\\\\s+(?:its\\\\s+|the\\\\s+)?edge\\\\s+if\\\\s+delayed', 'cancel\\\\s+and\\\\s+repost\\\\s+before', 'first\\\\s+in\\\\s+the\\\\s+(?:book|queue)', '(?:vanish|disappear)\\\\w*\\\\s+when\\\\s+orders\\\\s+are\\\\s+delayed', 'delayed\\\\s+(?:by|beyond)\\\\s+(?:one|a|\\\\d+)\\\\s+(?:tick|second|millisecond|microsecond)', 'before\\\\s+competitors?\\\\s+(?:update|react|repric)']; params found: []"
+}

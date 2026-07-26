@@ -1,0 +1,21 @@
+{
+  "strategy_style": "volatility_regime",
+  "hft_or_low_latency_dependency": false,
+  "parameter_source_quality": "explicit",
+  "backtestability": "high",
+  "extracted_parameters": {
+    "rv_window_minutes": 60,
+    "vol_expansion_ratio": 1.2,
+    "vol_contraction_ratio": 0.8,
+    "momentum_lookback_minutes": 30,
+    "trend_strength_entry": 0.5,
+    "trend_strength_exit": 0.2,
+    "time_stop_minutes": 120,
+    "stop_loss_atr_mult": 1.5,
+    "fee_slippage_bps_per_side": 7
+  },
+  "reported_metrics": {
+    "sharpe_after_costs": 1.4,
+    "sharpe_unconditional": 0.4
+  }
+}

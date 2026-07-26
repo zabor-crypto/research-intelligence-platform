@@ -1,0 +1,151 @@
+{
+  "hypothesis_id": "hyp-d5c0c27510",
+  "source_ids": [
+    "1"
+  ],
+  "hypothesis_name": "Realized-Volatility Regime Filter (from: Volatility Regime Conditioning of Intraday Momentum in Crypt)",
+  "one_sentence_idea": "Volatility regimes condition the profitability of directional signals; use a vol-regime classifier as an overlay that gates entries and scales size.",
+  "market": "crypto",
+  "asset_universe": "BTC, ETH perpetuals",
+  "timeframe": "1m-15m",
+  "strategy_style": "volatility_regime",
+  "core_alpha_hypothesis": "Volatility regimes condition the profitability of directional signals; use a vol-regime classifier as an overlay that gates entries and scales size.",
+  "required_data": [
+    "ohlcv",
+    "volume",
+    "funding_rates"
+  ],
+  "features": [
+    "ohlcv",
+    "volume",
+    "funding_rates"
+  ],
+  "entry_rules": [
+    "Long entry: vol_ratio > 1.2 AND ret_30m > 0 AND trend_strength = abs(ret_30m) / rv_60m > 0.5",
+    "Short entry: vol_ratio > 1.2 AND ret_30m < 0 AND trend_strength > 0.5"
+  ],
+  "exit_rules": [
+    "Exit when trend_strength < 0.2",
+    "Exit on regime transition: vol_ratio < 0.8 (expanding -> contracting)",
+    "Time stop: exit after 120 minutes in position",
+    "Stop-loss at 1.5x ATR_60m from entry price"
+  ],
+  "risk_rules": [
+    "max position risk 1% of equity per trade",
+    "portfolio-level volatility target 15% annualized",
+    "de-risk 50% when 30-day drawdown exceeds 10%"
+  ],
+  "position_sizing": "size = (1% equity risk) / (stop distance) with stop at 1.5x ATR; scaled down when realized vol exceeds the 15% annualized portfolio target",
+  "fees_slippage_model": "taker 7 bps per side (fees + slippage); maker 1 bp where passive fills are realistic",
+  "expected_failure_modes": [
+    "edge is an artifact of survivorship or lookahead bias",
+    "signal decays after fees at the target timeframe",
+    "regime dependence: works only in trending/high-vol samples"
+  ],
+  "minimum_viable_backtest": "Backtest on BTC and ETH 1m-15m bars over >=3 years including one bear market; compare vs the baseline set (buy-and-hold, randomized-entry, unconditional variant).",
+  "optimization_parameters": {
+    "rv_window_minutes": [
+      30,
+      60,
+      90
+    ],
+    "vol_expansion_ratio": [
+      0.6,
+      1.2,
+      1.8
+    ],
+    "vol_contraction_ratio": [
+      0.4,
+      0.8,
+      1.2
+    ],
+    "momentum_lookback_minutes": [
+      15,
+      30,
+      45
+    ],
+    "trend_strength_entry": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "trend_strength_exit": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "time_stop_minutes": [
+      60,
+      120,
+      180
+    ],
+    "stop_loss_atr_mult": [
+      0.75,
+      1.5,
+      2.25
+    ]
+  },
+  "walk_forward_validation_plan": "Rolling walk-forward: 12-month train / 3-month test, stepped quarterly; require positive OOS expectancy in >=60% of folds.",
+  "anti_overfitting_checks": [
+    "parameter-stability heatmap (edge must not live in one cell)",
+    "deflated Sharpe ratio on OOS results",
+    "test on assets not used for parameter selection"
+  ],
+  "priority_score": 0.0,
+  "status": "candidate",
+  "strategy_parameters": {
+    "rv_window_minutes": 60,
+    "vol_expansion_ratio": 1.2,
+    "vol_contraction_ratio": 0.8,
+    "momentum_lookback_minutes": 30,
+    "trend_strength_entry": 0.5,
+    "trend_strength_exit": 0.2,
+    "time_stop_minutes": 120,
+    "stop_loss_atr_mult": 1.5,
+    "fee_slippage_bps_per_side": 7
+  },
+  "parameter_provenance": {
+    "rv_window_minutes": "source",
+    "vol_expansion_ratio": "source",
+    "vol_contraction_ratio": "source",
+    "momentum_lookback_minutes": "source",
+    "trend_strength_entry": "source",
+    "trend_strength_exit": "source",
+    "time_stop_minutes": "source",
+    "stop_loss_atr_mult": "source",
+    "fee_slippage_bps_per_side": "source"
+  },
+  "feature_formulas": {
+    "ret_30m": "close / close.shift(30) - 1 (on 1m bars)",
+    "rv_60m": "std(1m log returns over 60 bars) * sqrt(60)",
+    "vol_ratio": "rv_60m / rv_240m (short/long realized volatility)",
+    "trend_strength": "abs(ret_30m) / rv_60m",
+    "atr_60m": "average true range over 60 1m bars"
+  },
+  "parameter_source_quality": "explicit",
+  "parameterization_status": "source_parameterized",
+  "missing_for_backtest": [],
+  "candidate_export_allowed": true,
+  "backtest_spec_export_allowed": true,
+  "source_reported_metrics": {
+    "sharpe_after_costs": 1.4,
+    "sharpe_unconditional": 0.4
+  },
+  "order_assumptions": "market (taker) orders at next 1m bar open after signal; no partial fills modeled; execution latency tolerance >= 1 bar (non-HFT by construction)",
+  "baseline_comparisons": [
+    "buy-and-hold on the same universe",
+    "randomized-entry baseline with identical exits and sizing",
+    "unconditional variant (same rules without the regime/filter condition)"
+  ],
+  "optimization_constraints": [
+    "vol_expansion_ratio > vol_contraction_ratio",
+    "trend_strength_entry > trend_strength_exit",
+    "time_stop_minutes > momentum_lookback_minutes"
+  ],
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "original_source_has_latency_dependency": false,
+  "adapted_to_non_hft": false,
+  "adaptation_validity": "not_needed",
+  "non_hft_adaptation": ""
+}

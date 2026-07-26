@@ -1,0 +1,75 @@
+{
+  "source_id": "",
+  "document_id": "",
+  "title": "Internal Note: Volatility-Regime Gated Momentum on ETH Perpetuals",
+  "research_domain": "quantitative_finance",
+  "asset_class": "multi_asset",
+  "market_type": "perpetual_futures",
+  "timeframe": "1m-15m",
+  "strategy_style": "momentum",
+  "alpha_mechanism": "Directional persistence in crypto returns is exploitable when conditioned on volatility regime; trend entries only in expanding-volatility regimes.",
+  "signal_description": "# Internal Note: Volatility-Regime Gated Momentum on ETH Perpetuals",
+  "features": [
+    "ohlcv",
+    "volume"
+  ],
+  "indicators": [
+    "atr",
+    "realized volatility"
+  ],
+  "entry_logic": "Long entry: vol_ratio > 1.3 AND ret_15m > 0 AND trend_strength = abs(ret_15m) / rv_45m > 0.6; Short entry: vol_ratio > 1.3 AND ret_15m < 0 AND trend_strength > 0.6",
+  "exit_logic": "Exit when trend_strength < 0.25; Exit on regime transition: vol_ratio < 0.7 (expanding -> contracting); Time stop: exit after 90 minutes in position; Stop-loss at 2x ATR_45m from entry price",
+  "risk_management": "stop-loss and regime-based de-risking mentioned",
+  "position_sizing": "volatility targeting",
+  "data_requirements": [
+    "ohlcv",
+    "volume"
+  ],
+  "extracted_parameters": {
+    "rv_window_minutes": 45,
+    "vol_expansion_ratio": 1.3,
+    "vol_contraction_ratio": 0.7,
+    "momentum_lookback_minutes": 15,
+    "trend_strength_entry": 0.6,
+    "trend_strength_exit": 0.25,
+    "time_stop_minutes": 90,
+    "stop_loss_atr_mult": 2,
+    "fee_slippage_bps_per_side": 6
+  },
+  "parameter_source_quality": "explicit",
+  "source_rule_quality": "explicit",
+  "source_data_quality": "explicit",
+  "source_evidence_type": "manual_note",
+  "source_asset_universe": "ETH-USDT perpetual futures",
+  "source_risk_parameters": {
+    "portfolio_vol_target_pct": 12,
+    "monthly_drawdown_halt_pct": 8
+  },
+  "source_cost_parameters": {
+    "fee_slippage_bps_per_side": 6
+  },
+  "source_entry_conditions": [
+    "volatility regime expanding: vol_ratio > 1.3",
+    "trend_strength > 0.6",
+    "direction of the 15-minute return"
+  ],
+  "transaction_cost_assumptions": "6 bps per side (from source)",
+  "market_regime_conditions": "volatility-regime dependent",
+  "reported_metrics": {
+    "sharpe_after_costs": 1.1,
+    "sharpe_unconditional": 0.3
+  },
+  "limitations": [
+    "results may not survive transaction costs"
+  ],
+  "implementation_complexity": "low",
+  "crypto_transferability": "adaptation_required",
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "backtestability": "high",
+  "falsification_tests": [
+    "signal has no predictive power out-of-sample",
+    "edge disappears after realistic fees and slippage"
+  ],
+  "notes": "mock extraction; style=momentum; hft markers: []; params found: ['fee_slippage_bps_per_side', 'momentum_lookback_minutes', 'rv_window_minutes', 'stop_loss_atr_mult', 'time_stop_minutes', 'trend_strength_entry', 'trend_strength_exit', 'vol_contraction_ratio', 'vol_expansion_ratio']"
+}

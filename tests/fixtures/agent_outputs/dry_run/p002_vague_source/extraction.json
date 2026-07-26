@@ -1,0 +1,48 @@
+{
+  "source_id": "",
+  "document_id": "",
+  "title": "The AI Alpha Revolution in Crypto",
+  "research_domain": "quantitative_finance",
+  "asset_class": "crypto",
+  "market_type": "spot",
+  "timeframe": "unspecified",
+  "strategy_style": "generic",
+  "alpha_mechanism": "The documented effect may transfer to liquid crypto markets at non-HFT horizons; test the closest crypto analog.",
+  "signal_description": "# The AI Alpha Revolution in Crypto",
+  "features": [
+    "ohlcv"
+  ],
+  "indicators": [],
+  "entry_logic": "",
+  "exit_logic": "",
+  "risk_management": "stop-loss and regime-based de-risking mentioned",
+  "position_sizing": "",
+  "data_requirements": [
+    "ohlcv"
+  ],
+  "extracted_parameters": {},
+  "parameter_source_quality": "missing",
+  "source_rule_quality": "vague",
+  "source_data_quality": "partial",
+  "source_evidence_type": "abstract_only",
+  "source_asset_universe": "",
+  "source_risk_parameters": {},
+  "source_cost_parameters": {},
+  "source_entry_conditions": [],
+  "transaction_cost_assumptions": "not discussed",
+  "market_regime_conditions": "",
+  "reported_metrics": {},
+  "limitations": [
+    "results may not survive transaction costs"
+  ],
+  "implementation_complexity": "medium",
+  "crypto_transferability": "direct",
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "backtestability": "medium",
+  "falsification_tests": [
+    "signal has no predictive power out-of-sample",
+    "edge disappears after realistic fees and slippage"
+  ],
+  "notes": "mock extraction; style=generic; hft markers: []; params found: []"
+}

@@ -1,0 +1,63 @@
+{
+  "source_id": "1",
+  "document_id": "1",
+  "title": "Volatility Regime Conditioning of Intraday Momentum in Crypto Markets",
+  "research_domain": "quantitative_finance",
+  "asset_class": "crypto",
+  "market_type": "perpetual_futures",
+  "timeframe": "1m-15m",
+  "strategy_style": "volatility_regime",
+  "alpha_mechanism": "Volatility regimes condition the profitability of directional signals; use a vol-regime classifier as an overlay that gates entries and scales size.",
+  "signal_description": "# Volatility Regime Conditioning of Intraday Momentum in Crypto Markets",
+  "features": [
+    "ohlcv",
+    "volume",
+    "funding_rates"
+  ],
+  "indicators": [
+    "rsi",
+    "atr",
+    "realized volatility"
+  ],
+  "entry_logic": "Long entry: vol_ratio > 1.2 AND ret_30m > 0 AND trend_strength = abs(ret_30m) / rv_60m > 0.5; Short entry: vol_ratio > 1.2 AND ret_30m < 0 AND trend_strength > 0.5",
+  "exit_logic": "Exit when trend_strength < 0.2; Exit on regime transition: vol_ratio < 0.8 (expanding -> contracting); Time stop: exit after 120 minutes in position; Stop-loss at 1.5x ATR_60m from entry price",
+  "risk_management": "stop-loss and regime-based de-risking mentioned",
+  "position_sizing": "volatility targeting",
+  "data_requirements": [
+    "ohlcv",
+    "volume",
+    "funding_rates"
+  ],
+  "extracted_parameters": {
+    "rv_window_minutes": 60,
+    "vol_expansion_ratio": 1.2,
+    "vol_contraction_ratio": 0.8,
+    "momentum_lookback_minutes": 30,
+    "trend_strength_entry": 0.5,
+    "trend_strength_exit": 0.2,
+    "time_stop_minutes": 120,
+    "stop_loss_atr_mult": 1.5,
+    "fee_slippage_bps_per_side": 7
+  },
+  "parameter_source_quality": "explicit",
+  "source_rule_quality": "explicit",
+  "source_data_quality": "explicit",
+  "source_evidence_type": "full_paper",
+  "transaction_cost_assumptions": "7 bps per side (from source)",
+  "market_regime_conditions": "volatility-regime dependent",
+  "reported_metrics": {
+    "sharpe_after_costs": 1.4,
+    "sharpe_unconditional": 0.4
+  },
+  "limitations": [],
+  "implementation_complexity": "medium",
+  "crypto_transferability": "direct",
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "backtestability": "high",
+  "falsification_tests": [
+    "signal has no predictive power out-of-sample",
+    "edge disappears after realistic fees and slippage"
+  ],
+  "notes": "mock extraction; style=volatility_regime; hft markers: []; params found: ['fee_slippage_bps_per_side', 'momentum_lookback_minutes', 'rv_window_minutes', 'stop_loss_atr_mult', 'time_stop_minutes', 'trend_strength_entry', 'trend_strength_exit', 'vol_contraction_ratio', 'vol_expansion_ratio']"
+}

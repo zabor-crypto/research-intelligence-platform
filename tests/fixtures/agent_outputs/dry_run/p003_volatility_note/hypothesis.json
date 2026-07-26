@@ -1,0 +1,211 @@
+{
+  "source_archetype": "volatility_regime_momentum",
+  "generated_archetype": "volatility_regime_momentum",
+  "core_alpha_triggers": [
+    "volatility",
+    "momentum"
+  ],
+  "preserved_alpha_triggers": [
+    "volatility",
+    "momentum"
+  ],
+  "dropped_alpha_triggers": [],
+  "archetype_fidelity": "strong",
+  "source_entry_conditions": [
+    "volatility regime expanding: vol_ratio > 1.3",
+    "trend_strength > 0.6",
+    "direction of the 15-minute return"
+  ],
+  "generated_entry_conditions": [
+    "Long entry: vol_ratio > 1.3 AND ret_15m > 0 AND trend_strength = abs(ret_15m) / rv_45m > 0.6",
+    "Short entry: vol_ratio > 1.3 AND ret_15m < 0 AND trend_strength > 0.6"
+  ],
+  "preserved_entry_conditions": [
+    "volatility regime expanding: vol_ratio > 1.3",
+    "trend_strength > 0.6",
+    "direction of the 15-minute return"
+  ],
+  "dropped_entry_conditions": [],
+  "entry_condition_fidelity": "strong",
+  "hypothesis_id": "hyp-c3ade47530",
+  "source_ids": [
+    ""
+  ],
+  "hypothesis_name": "Volatility-Aware Crypto Momentum (from: Internal Note: Volatility-Regime Gated Momentum on ETH Perpe)",
+  "one_sentence_idea": "Directional persistence in crypto returns is exploitable when conditioned on volatility regime; trend entries only in expanding-volatility regimes.",
+  "market": "crypto",
+  "asset_universe": "ETH-USDT perpetual futures",
+  "source_asset_universe": "ETH-USDT perpetual futures",
+  "generated_asset_universe": "ETH-USDT perpetual futures",
+  "asset_universe_provenance": "source",
+  "optional_robustness_universe": "BTC/ETH perpetuals",
+  "timeframe": "1m-15m",
+  "source_timeframe": "1m-15m",
+  "generated_timeframe": "1m-15m",
+  "timeframe_provenance": "source",
+  "source_risk_parameters": {
+    "portfolio_vol_target_pct": 12,
+    "monthly_drawdown_halt_pct": 8
+  },
+  "generated_risk_parameters": {
+    "portfolio_vol_target_pct": 12,
+    "monthly_drawdown_halt_pct": 8,
+    "risk_per_trade_pct": 1
+  },
+  "risk_parameter_provenance": {
+    "portfolio_vol_target_pct": "source",
+    "monthly_drawdown_halt_pct": "source",
+    "risk_per_trade_pct": "default"
+  },
+  "source_cost_parameters": {
+    "fee_slippage_bps_per_side": 6
+  },
+  "generated_cost_parameters": {
+    "fee_slippage_bps_per_side": 6
+  },
+  "cost_parameter_provenance": {
+    "fee_slippage_bps_per_side": "source"
+  },
+  "unmapped_extracted_parameters": {},
+  "strategy_style": "momentum",
+  "core_alpha_hypothesis": "Directional persistence in crypto returns is exploitable when conditioned on volatility regime; trend entries only in expanding-volatility regimes.",
+  "required_data": [
+    "ohlcv",
+    "volume"
+  ],
+  "features": [
+    "ohlcv",
+    "volume"
+  ],
+  "entry_rules": [
+    "Long entry: vol_ratio > 1.3 AND ret_15m > 0 AND trend_strength = abs(ret_15m) / rv_45m > 0.6",
+    "Short entry: vol_ratio > 1.3 AND ret_15m < 0 AND trend_strength > 0.6"
+  ],
+  "exit_rules": [
+    "Exit when trend_strength < 0.25",
+    "Exit on regime transition: vol_ratio < 0.7 (expanding -> contracting)",
+    "Time stop: exit after 90 minutes in position",
+    "Stop-loss at 2x ATR_45m from entry price"
+  ],
+  "risk_rules": [
+    "portfolio-level volatility target 12% annualized (source)",
+    "halt trading after 8% monthly drawdown (source)",
+    "max position risk 1% of equity per trade (default)"
+  ],
+  "position_sizing": "size normalized by realized volatility to target 12% annualized portfolio volatility; risk 1% of equity per trade using stop distance 2x ATR_45m",
+  "fees_slippage_model": "taker 6 bps per side (fees + slippage); maker 1 bp where passive fills are realistic",
+  "strategy_parameters": {
+    "rv_window_minutes": 45,
+    "vol_expansion_ratio": 1.3,
+    "vol_contraction_ratio": 0.7,
+    "momentum_lookback_minutes": 15,
+    "trend_strength_entry": 0.6,
+    "trend_strength_exit": 0.25,
+    "time_stop_minutes": 90,
+    "stop_loss_atr_mult": 2,
+    "fee_slippage_bps_per_side": 6
+  },
+  "parameter_provenance": {
+    "rv_window_minutes": "source",
+    "vol_expansion_ratio": "source",
+    "vol_contraction_ratio": "source",
+    "momentum_lookback_minutes": "source",
+    "trend_strength_entry": "source",
+    "trend_strength_exit": "source",
+    "time_stop_minutes": "source",
+    "stop_loss_atr_mult": "source",
+    "fee_slippage_bps_per_side": "source"
+  },
+  "feature_formulas": {
+    "ret_15m": "close / close.shift(15) - 1 (on 1m bars)",
+    "rv_45m": "std(1m log returns over 45 bars) * sqrt(45)",
+    "vol_ratio": "rv_45m / rv_180m (short/long realized volatility)",
+    "trend_strength": "abs(ret_15m) / rv_45m",
+    "atr_45m": "average true range over 45 1m bars"
+  },
+  "parameter_source_quality": "explicit",
+  "parameterization_status": "source_parameterized",
+  "missing_for_backtest": [],
+  "candidate_export_allowed": true,
+  "backtest_spec_export_allowed": true,
+  "source_reported_metrics": {
+    "sharpe_after_costs": 1.1,
+    "sharpe_unconditional": 0.3
+  },
+  "order_assumptions": "market (taker) orders at next 1m bar open after signal; no partial fills modeled; execution latency tolerance >= 1 bar (non-HFT by construction)",
+  "baseline_comparisons": [
+    "buy-and-hold on the same universe",
+    "randomized-entry baseline with identical exits and sizing",
+    "unconditional variant (same rules without the regime/filter condition)"
+  ],
+  "expected_failure_modes": [
+    "edge is an artifact of survivorship or lookahead bias",
+    "signal decays after fees at the target timeframe",
+    "regime dependence: works only in trending/high-vol samples"
+  ],
+  "minimum_viable_backtest": "Primary: ETH-USDT perpetual futures, 1m-15m bars (ohlcv + volume), over >=3 years including one bear market. Optional robustness: BTC/ETH perpetuals. Compare vs the baseline set (buy-and-hold, randomized-entry, unconditional variant).",
+  "optimization_parameters": {
+    "rv_window_minutes": [
+      22,
+      45,
+      68
+    ],
+    "vol_expansion_ratio": [
+      0.65,
+      1.3,
+      1.95
+    ],
+    "vol_contraction_ratio": [
+      0.35,
+      0.7,
+      1.05
+    ],
+    "momentum_lookback_minutes": [
+      8,
+      15,
+      22
+    ],
+    "trend_strength_entry": [
+      0.3,
+      0.6,
+      0.9
+    ],
+    "trend_strength_exit": [
+      0.12,
+      0.25,
+      0.38
+    ],
+    "time_stop_minutes": [
+      45,
+      90,
+      135
+    ],
+    "stop_loss_atr_mult": [
+      1,
+      2,
+      3
+    ]
+  },
+  "optimization_constraints": [
+    "vol_expansion_ratio > vol_contraction_ratio",
+    "trend_strength_entry > trend_strength_exit",
+    "time_stop_minutes > momentum_lookback_minutes"
+  ],
+  "walk_forward_validation_plan": "Rolling walk-forward: 12-month train / 3-month test, stepped quarterly; require positive OOS expectancy in >=60% of folds.",
+  "anti_overfitting_checks": [
+    "parameter-stability heatmap (edge must not live in one cell)",
+    "deflated Sharpe ratio on OOS results",
+    "test on assets not used for parameter selection"
+  ],
+  "priority_score": 0,
+  "status": "candidate",
+  "hft_or_low_latency_dependency": false,
+  "non_applicable_reason": "",
+  "original_source_has_latency_dependency": false,
+  "adapted_to_non_hft": false,
+  "adaptation_validity": "not_needed",
+  "non_hft_adaptation": "",
+  "spec_consistency": "strong",
+  "consistency_failures": [],
+  "consistency_warnings": []
+}
