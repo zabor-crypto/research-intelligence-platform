@@ -85,6 +85,25 @@ handoff contract, roadmap, and the non-HFT scope policy are in `docs/`.
 The starter research query catalog is in
 [docs/03_source_catalog.md](docs/03_source_catalog.md).
 
+## Project status & scope
+
+This repository is a **curated, self-contained public release** of the
+infrastructure-and-methodology layer of a larger private research system. It is
+authored and maintained by one person (Boris Zabavnikov).
+
+- **Tests:** 197 passing pytest cases (169 `def test_` functions; the difference
+  is test parametrization), run fully offline. CI runs ruff + pytest.
+- **What is public here:** the pipeline, the replaceable LLM layer, the
+  code-enforced non-HFT filters, the 12-dimension scoring, the evaluation
+  benchmark, the CLI, docs and tests.
+- **What is intentionally not here:** any private research corpus, proven
+  strategy parameters, run outputs, positions, or account data. The full private
+  system is considerably larger and is not published.
+- **Limitations:** this is a research-triage / hypothesis-generation tool, not a
+  trading bot and not an execution system; it produces backtest *specifications*,
+  not profitability claims. Ideas depending on HFT/low-latency edge are detected
+  and excluded by design.
+
 ## Disclaimer
 
 This platform generates, ranks, and exports research hypotheses for later
