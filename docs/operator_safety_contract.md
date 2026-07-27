@@ -1,6 +1,6 @@
 # Operator Safety Contract
 
-**Config:** [`research_pipeline_config/operator_safety_contract.yaml`](../research_pipeline_config/operator_safety_contract.yaml)
+**Config:** the machine-readable `operator_safety_contract.yaml` lives in the private parent system and is not published here. This document is the normative description.
 **Validator:** `src/research_pipeline/source_discovery/operator_contract.py`
 **Since:** v0.6.10
 

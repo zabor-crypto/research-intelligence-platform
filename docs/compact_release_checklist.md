@@ -1,6 +1,6 @@
 # Compact Release Checklist
 
-**Config:** [`research_pipeline_config/compact_release_checklist.yaml`](../research_pipeline_config/compact_release_checklist.yaml)
+**Config:** the machine-readable `compact_release_checklist.yaml` lives in the private parent system and is not published here. This document is the normative description.
 **Since:** v0.6.10
 
 A reusable release checklist so future tasks do not restate the full release

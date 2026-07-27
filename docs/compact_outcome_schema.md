@@ -1,6 +1,6 @@
 # Compact Outcome Schema
 
-**Config:** [`research_pipeline_config/compact_outcome_schema.yaml`](../research_pipeline_config/compact_outcome_schema.yaml)
+**Config:** the machine-readable `compact_outcome_schema.yaml` lives in the private parent system and is not published here. This document is the normative description.
 **Validator:** `operator_contract.py::validate_release_outcome_against_contract`
 **Since:** v0.6.10
 

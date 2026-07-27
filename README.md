@@ -28,6 +28,8 @@ collect (arXiv / OpenAlex / Semantic Scholar / GitHub / local files)
 Requires Python 3.11+.
 
 ```bash
+git clone https://github.com/zabor-crypto/research-intelligence-platform.git
+cd research-intelligence-platform
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
