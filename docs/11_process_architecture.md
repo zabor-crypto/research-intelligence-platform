@@ -83,6 +83,19 @@ third's venue was never resolved at all.
 Gate outcomes are structured: `pass`, `blocked_incomplete`, `blocked_contradictory`,
 `blocked_timing`.
 
+### 3b. The federated data catalog
+
+Before a dataset can be certified it has to be *findable and identifiable*. The estate is
+indexed as a federated catalog — logical datasets and their replicas across local and remote
+sections — behind a content-addressed pointer. The catalog carries a semantic hash, and a
+changed hash means the estate moved: every data assumption must be revalidated before the
+next run, rather than silently inherited.
+
+Clients see explicit states — ready, partial failure, stale, hash mismatch, schema
+unsupported, representation mismatch, unavailable — and only the first two are queryable. A
+section that failed to probe does not erase the last known-good metadata for that section,
+and equally does not let stale metadata authorize a transfer.
+
 ### 4. Data semantics certification
 
 A dataset is not usable because it parses. It is usable when the meaning of every
@@ -229,5 +242,6 @@ machinery that is specific to one repository's operational setup.
 The private layer is active research and is not scheduled for publication. What is
 published here is the part that is generic, self-contained, and useful without it.
 
-See [12_research_outcomes.md](12_research_outcomes.md) for what the process has
-actually produced so far.
+See [12_research_outcomes.md](12_research_outcomes.md) for what the process has measured,
+built and decided, and [13_current_status.md](13_current_status.md) for where it stands at
+iteration 34 and what is still open.

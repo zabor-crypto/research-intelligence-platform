@@ -97,23 +97,52 @@ terminal closure. The engines are not published; the enforcement logic partly is
 
 - **[docs/11_process_architecture.md](docs/11_process_architecture.md)** — the
   full lifecycle, the enforcement mechanisms, and what each one prevents.
-- **[docs/12_research_outcomes.md](docs/12_research_outcomes.md)** — what it has
-  produced so far.
+- **[docs/12_research_outcomes.md](docs/12_research_outcomes.md)** — everything it
+  has measured, built and decided.
+- **[docs/13_current_status.md](docs/13_current_status.md)** — where the project is
+  at iteration 34, and the open questions with what would resolve them.
 - **[`src/research_process/`](src/research_process/)** — eight of those gates as
   working, dependency-free code with 95 tests: the pre-freeze identity, contradiction,
   dataset-intersection and authority gates, the historical-backtest artifact contract,
   the insolvency and replay taxonomies, and the terminal closure registry. Each module
   docstring names the concrete failure that motivated it.
 
-The short version of the outcomes: **2 strategies reached a preregistered
-historical backtest, 0 were gross-positive, 0 were net-positive, 2 are terminally
-closed.** Both negative results are published with their full cost decomposition
-and failure attribution, including one run that ends insolvent. Neither strategy
-can re-enter a promotion path — the closure registry fails closed and `reopen()`
-raises.
+### Results in brief
 
-Publishing zeros is deliberate. A research process whose published output is only
-its successes provides no evidence that it can produce a negative result at all.
+**The extraction layer is benchmarked, not asserted.** On a blind 13-document,
+134-field set: evidence-link presence 100%, link validity 97.8%, unsupported
+assertions 2.1%, unsupported evidence links **0**, zero critical errors. When a
+source genuinely does not close a field, the pipeline says so 84% of the time
+instead of filling the gap — which is what makes every downstream gate meaningful.
+
+**Eighteen components, validated by two complete vertical slices** — a source
+carried from discovery through preregistered backtest to terminal closure, twice,
+in two different strategy families. Fourteen are generic and reusable; four are
+strategy-family specific, and the split is tracked so the distinction stays honest.
+
+**A federated data catalog of 183 logical datasets across 221 replicas**, plus the
+path from a catalogued dataset to something a backtest may legitimately read:
+semantics certification with an explicit evidence hierarchy, controlled
+materialization off read-only sources, bounded acquisition from free official
+publishers, and immutable content-hashed snapshots. First dataset carried all the
+way: 401 760 rows, 109 partitions, `screen_ready`, content hash recorded.
+
+**The second one deliberately did not pass.** A funding dataset materialized
+cleanly, then stopped one step short — the venue's documentation does not say
+whether its funding timestamp marks the *effective* or the *published* instant, no
+local evidence settles it, and those are different instants for anything that has to
+know what was knowable at decision time. Relaxing one confidence threshold would
+have produced a second green result. The gate held instead.
+
+**Two strategies have been through a preregistered backtest; both were falsified**
+and both are terminally closed, with full cost decomposition and failure attribution
+published — including one run that ends insolvent, reported rather than dropped.
+Neither can re-enter a promotion path: the closure registry fails closed and
+`reopen()` raises. A research process whose published output is only its successes
+provides no evidence that it can produce a negative result at all.
+
+**Where it stands:** the machinery is built and proven end to end; the data estate
+it runs on is 1% certified. That, and not strategy generation, is the current work.
 
 ## Documentation
 
