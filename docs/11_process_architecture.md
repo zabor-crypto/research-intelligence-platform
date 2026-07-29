@@ -197,13 +197,34 @@ push or a hand-cut tag is **prohibited by policy and designed to be detected** �
 is not *prevented*. Claiming otherwise would be exactly the kind of unearned
 assurance the rest of the architecture exists to prevent.
 
+## What of this is published as code
+
+The enforcement primitives above are not only described here — several of them ship in
+`src/research_process/`. They are standard-library only, have no dependency on the private
+engines, and each carries the concrete failure that motivated it in its module docstring.
+
+| Module | Stage | What it enforces |
+|---|---|---|
+| [`pre_freeze/identity_gate.py`](../src/research_process/pre_freeze/identity_gate.py) | 3 | Sixteen identity fields, each closed only by the source with evidence; five named grounds that may never close a field; multi-venue constructions that may not collapse onto one venue |
+| [`pre_freeze/contradiction.py`](../src/research_process/pre_freeze/contradiction.py) | 3 | A source that disagrees with itself blocks; no silent precedence between prose and code; cosmetic differences are normalised away; an inventory too thin to compare reports *not evaluated* rather than *clean* |
+| [`pre_freeze/dataset_gate.py`](../src/research_process/pre_freeze/dataset_gate.py) | 3 | Exact dataset intersection — category claims ("data exists") rejected, causality verified, bounded normalisations enumerated, new acquisition blocked rather than triggered |
+| [`pre_freeze/authority_gate.py`](../src/research_process/pre_freeze/authority_gate.py) | 3 | A secondary summary can never be a primary source; content must be strategy-bearing *and* frozen; a role may not claim more authority than it has |
+| [`process_taxonomy/backtest_artifact_contract.py`](../src/research_process/process_taxonomy/backtest_artifact_contract.py) | 7 | Event-level equity curve with a full cost decomposition is mandatory; a summary-only result is not a valid backtest |
+| [`process_taxonomy/insolvency.py`](../src/research_process/process_taxonomy/insolvency.py) | 9 | Ever-insolvent and terminally-insolvent are separate facts; returns, Sharpe and Sortino through an equity zero-crossing are marked non-interpretable; no liquidation model is introduced after the fact |
+| [`process_taxonomy/replay.py`](../src/research_process/process_taxonomy/replay.py) | 9 | Reruns counted by cause, so a determinism reproduction is never reported as zero recomputation and never confused with a rescue |
+| [`closure/registry.py`](../src/research_process/closure/registry.py) | 10 | Promotion selectors fail closed for a terminally closed strategy; diagnostic reuse still admitted; `reopen()` raises |
+
+Not published: the backtest and execution-accounting engines, the cross-sectional and pair
+strategy implementations, the data estate, the source registry, and the release-governance
+machinery that is specific to one repository's operational setup.
+
 ## Scale and status
 
 | | Public (this repo) | Private process engine |
 |---|---|---|
-| Source lines | ~7 000 | ~70 000 |
-| Test functions | 169 (197 collected cases) | ~3 500 |
-| Released iterations | 1 | 34 |
+| Source lines | ~8 500 | ~70 000 |
+| Test functions | 264 (324 collected cases) | ~3 500 |
+| Released iterations | 2 | 34 |
 
 The private layer is active research and is not scheduled for publication. What is
 published here is the part that is generic, self-contained, and useful without it.

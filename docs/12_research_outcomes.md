@@ -110,4 +110,12 @@ no evidence that it can produce a negative result at all.
 
 The mechanically enforceable version of that claim is stronger than the rhetorical
 one. Both strategies are in the closure registry. Neither can re-enter a promotion
-path. `reopen()` raises.
+path. `reopen()` raises — see
+[`src/research_process/closure/registry.py`](../src/research_process/closure/registry.py)
+and its tests in [`tests/test_terminal_closure.py`](../tests/test_terminal_closure.py).
+
+The solvency classification used for R2 above is
+[`process_taxonomy/insolvency.py`](../src/research_process/process_taxonomy/insolvency.py):
+it separates *ever* non-positive from *terminally* non-positive equity, and marks return
+metrics through a zero-crossing as economically non-interpretable rather than quietly
+reporting them.

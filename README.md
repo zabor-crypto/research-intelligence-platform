@@ -93,12 +93,17 @@ That stage lives in a separate research-process layer — admission control,
 pre-freeze market-identity gates, data semantics certification, immutable snapshot
 materialization, preregistration and freeze, execution accounting, independent
 reconciliation against a differential oracle, and mechanically irreversible
-terminal closure. It is not published, but it is fully documented here:
+terminal closure. The engines are not published; the enforcement logic partly is.
 
 - **[docs/11_process_architecture.md](docs/11_process_architecture.md)** — the
   full lifecycle, the enforcement mechanisms, and what each one prevents.
 - **[docs/12_research_outcomes.md](docs/12_research_outcomes.md)** — what it has
   produced so far.
+- **[`src/research_process/`](src/research_process/)** — eight of those gates as
+  working, dependency-free code with 95 tests: the pre-freeze identity, contradiction,
+  dataset-intersection and authority gates, the historical-backtest artifact contract,
+  the insolvency and replay taxonomies, and the terminal closure registry. Each module
+  docstring names the concrete failure that motivated it.
 
 The short version of the outcomes: **2 strategies reached a preregistered
 historical backtest, 0 were gross-positive, 0 were net-positive, 2 are terminally
@@ -124,17 +129,18 @@ This repository is a **curated, self-contained public release** of the
 infrastructure-and-methodology layer of a larger private research system. It is
 authored and maintained by one person (Boris Zabavnikov).
 
-- **Tests:** 197 passing pytest cases (169 `def test_` functions; the difference
+- **Tests:** 324 passing pytest cases (264 `def test_` functions; the difference
   is test parametrization), run fully offline. CI runs ruff + pytest.
 - **What is public here:** the pipeline, the replaceable LLM layer, the
   code-enforced non-HFT filters, the 12-dimension scoring, the evaluation
-  benchmark, the CLI, docs and tests.
+  benchmark, eight enforcement gates from the research-process layer, the CLI,
+  docs and tests.
 - **What is intentionally not here:** the private research corpus and source
   registry, strategy implementations and parameters, the backtest and execution-
   accounting engines, run outputs, positions, or account data. The private layer
-  is roughly ten times this repository by source lines (~70k vs ~7k), carries
+  is roughly eight times this repository by source lines (~70k vs ~8.5k), carries
   ~3 500 test functions, and has gone through 34 released iterations — its design
-  and results are documented above, its code is not published.
+  and results are documented above, its engines are not published.
 - **Limitations:** this is a research-triage / hypothesis-generation tool, not a
   trading bot and not an execution system; it produces backtest *specifications*,
   not profitability claims. Ideas depending on HFT/low-latency edge are detected
