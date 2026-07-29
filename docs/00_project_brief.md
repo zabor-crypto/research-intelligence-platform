@@ -26,7 +26,9 @@ For each ingested source it produces:
   co-location, latency arbitrage, or speed competition are ingested for
   background knowledge only, marked `requires_hft_or_low_latency_edge`,
   and excluded from candidate exports.
-- No backtesting itself — it produces backtest *specifications*.
+- No backtesting itself — it produces backtest *specifications*. Validation
+  happens in a separate research-process layer, described in
+  [11_process_architecture.md](11_process_architecture.md) and not published here.
 - No claim of profitability: outputs are hypotheses to be falsified.
 
 ## Why it exists
@@ -41,11 +43,15 @@ realistic timeframes, and ranks them by practical testability.
 ## Where it fits in the R&D pipeline
 
 ```
-[Research Intelligence Platform]          [Backtesting agent]        [Portfolio]
- discover → extract → hypothesize  ──►  implement backtest_spec ──► allocate to
- → score → rank → backtest spec          → validate/falsify           survivors
+[Research Intelligence Platform]      [Research process engine]      [Portfolio]
+ discover → extract → hypothesize ──► preregister → backtest ──►  allocate to
+ → score → rank → backtest spec       → reconcile → adjudicate      survivors
+                                       → close                      (if any)
 ```
 
 The handoff artifact is `exports/backtest_specs/backtest_spec_<id>.md|json`
-(see docs/07_backtest_handoff_contract.md). Everything upstream of the
-backtest lives here; everything downstream lives in the backtesting project.
+(see docs/07_backtest_handoff_contract.md). Everything upstream of the backtest
+lives here. Everything downstream lives in a separate, larger research-process
+layer that is not published — its design is documented in
+[11_process_architecture.md](11_process_architecture.md) and its results to date in
+[12_research_outcomes.md](12_research_outcomes.md).

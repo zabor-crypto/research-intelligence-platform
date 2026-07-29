@@ -3,8 +3,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "research-intel"
-version = "0.1.0"
+name = "research-intelligence-platform"
+version = "1.0.0"
 description = "Local-first research intelligence platform: turns external research into ranked, backtest-ready crypto trading strategy hypotheses (non-HFT)."
 readme = "README.md"
 requires-python = ">=3.11"

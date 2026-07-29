@@ -10,6 +10,10 @@ tool that feeds a separate backtesting workflow. Ideas that depend on
 HFT/low-latency edge are detected, penalized, and excluded from candidate
 exports (`requires_hft_or_low_latency_edge`).
 
+Everything runs offline and deterministically by default: the LLM layer is
+replaceable and ships with a mock, all HTTP is mocked in tests, and the entire
+quickstart below works from a fresh clone with no API key.
+
 ## Pipeline
 
 ```
@@ -79,6 +83,33 @@ pytest        # offline; all HTTP is mocked
 ruff check .
 ```
 
+## What happens after the handoff
+
+This repository ends where the hard part begins. A generated hypothesis is a
+claim, and the value of a research pipeline is decided by what stops a plausible
+claim from surviving a bad result.
+
+That stage lives in a separate research-process layer — admission control,
+pre-freeze market-identity gates, data semantics certification, immutable snapshot
+materialization, preregistration and freeze, execution accounting, independent
+reconciliation against a differential oracle, and mechanically irreversible
+terminal closure. It is not published, but it is fully documented here:
+
+- **[docs/11_process_architecture.md](docs/11_process_architecture.md)** — the
+  full lifecycle, the enforcement mechanisms, and what each one prevents.
+- **[docs/12_research_outcomes.md](docs/12_research_outcomes.md)** — what it has
+  produced so far.
+
+The short version of the outcomes: **2 strategies reached a preregistered
+historical backtest, 0 were gross-positive, 0 were net-positive, 2 are terminally
+closed.** Both negative results are published with their full cost decomposition
+and failure attribution, including one run that ends insolvent. Neither strategy
+can re-enter a promotion path — the closure registry fails closed and `reopen()`
+raises.
+
+Publishing zeros is deliberate. A research process whose published output is only
+its successes provides no evidence that it can produce a negative result at all.
+
 ## Documentation
 
 Start with [docs/00_project_brief.md](docs/00_project_brief.md). Architecture,
@@ -98,9 +129,12 @@ authored and maintained by one person (Boris Zabavnikov).
 - **What is public here:** the pipeline, the replaceable LLM layer, the
   code-enforced non-HFT filters, the 12-dimension scoring, the evaluation
   benchmark, the CLI, docs and tests.
-- **What is intentionally not here:** any private research corpus, proven
-  strategy parameters, run outputs, positions, or account data. The full private
-  system is considerably larger and is not published.
+- **What is intentionally not here:** the private research corpus and source
+  registry, strategy implementations and parameters, the backtest and execution-
+  accounting engines, run outputs, positions, or account data. The private layer
+  is roughly ten times this repository by source lines (~70k vs ~7k), carries
+  ~3 500 test functions, and has gone through 34 released iterations — its design
+  and results are documented above, its code is not published.
 - **Limitations:** this is a research-triage / hypothesis-generation tool, not a
   trading bot and not an execution system; it produces backtest *specifications*,
   not profitability claims. Ideas depending on HFT/low-latency edge are detected

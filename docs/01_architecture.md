@@ -69,8 +69,9 @@ unscored hypotheses), and ingestion dedups at both source and document level.
 - **New scoring dimension**: add to `SCORING_DIMENSIONS`, `WEIGHTS`
   (must still sum to 1.0), and the scoring prompt.
 - **New export format**: extend `hypotheses/exporter.py`.
-- **Scheduler/dashboard** (roadmap phases 7–8) sit on top of the CLI and DB
-  without touching the pipeline.
+- **Scheduler/dashboard**: would sit on top of the CLI and DB without touching the
+  pipeline. Not built — see [08_roadmap.md](08_roadmap.md) for why the work went
+  downstream instead.
 
 ## SQLite → PostgreSQL migration path
 
