@@ -146,6 +146,18 @@ authored and maintained by one person (Boris Zabavnikov).
   not profitability claims. Ideas depending on HFT/low-latency edge are detected
   and excluded by design.
 
+## Related repository
+
+[**zaBor**](https://github.com/zabor-crypto/zaBor) sits downstream of this one: the
+engineering toolkit where surviving ideas become running components. It contains a
+multi-exchange emergency risk-control engine with a portfolio-level Regime Guard, a
+wallet-tagged Hyperliquid microstructure recorder with a per-counterparty adverse-
+selection toolkit, and a multi-venue funding-carry research stack that ships an
+explicit REJECT verdict alongside its code.
+
+The division of labour is deliberate: this repository decides **what is worth
+building**, that one contains **what was built**.
+
 ## Disclaimer
 
 This platform generates, ranks, and exports research hypotheses for later
