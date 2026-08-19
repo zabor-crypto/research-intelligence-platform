@@ -85,9 +85,9 @@ ruff check .
 
 ## What happens after the handoff
 
-This repository ends where the hard part begins. A generated hypothesis is a
-claim, and the value of a research pipeline is decided by what stops a plausible
-claim from surviving a bad result.
+A generated hypothesis is a claim. What decides the value of a research pipeline
+is the machinery that stops a plausible claim from surviving a bad result — and
+that machinery is the part of this system that took the most work.
 
 That stage lives in a separate research-process layer — admission control,
 pre-freeze market-identity gates, data semantics certification, immutable snapshot
@@ -102,10 +102,7 @@ terminal closure. The engines are not published; the enforcement logic partly is
 - **[docs/13_current_status.md](docs/13_current_status.md)** — where the project is
   at iteration 34, and the open questions with what would resolve them.
 - **[`src/research_process/`](src/research_process/)** — eight of those gates as
-  working, dependency-free code with 95 tests: the pre-freeze identity, contradiction,
-  dataset-intersection and authority gates, the historical-backtest artifact contract,
-  the insolvency and replay taxonomies, and the terminal closure registry. Each module
-  docstring names the concrete failure that motivated it.
+  working, dependency-free code (detailed below).
 
 ### Results in brief
 
@@ -114,6 +111,14 @@ terminal closure. The engines are not published; the enforcement logic partly is
 assertions 2.1%, unsupported evidence links **0**, zero critical errors. When a
 source genuinely does not close a field, the pipeline says so 84% of the time
 instead of filling the gap — which is what makes every downstream gate meaningful.
+
+**The enforcement logic is code, not policy.** Eight gates ship in
+[`src/research_process/`](src/research_process/) as dependency-free modules with 95
+tests: pre-freeze identity, contradiction, dataset-intersection and authority gates,
+the historical-backtest artifact contract, the insolvency and replay taxonomies, and
+a terminal closure registry that fails closed — `reopen()` raises. Each module
+docstring names the concrete failure that motivated it. A rule written in a document
+is a preference; a rule that raises is a constraint.
 
 **Eighteen components, validated by two complete vertical slices** — a source
 carried from discovery through preregistered backtest to terminal closure, twice,
@@ -127,22 +132,27 @@ materialization off read-only sources, bounded acquisition from free official
 publishers, and immutable content-hashed snapshots. First dataset carried all the
 way: 401 760 rows, 109 partitions, `screen_ready`, content hash recorded.
 
-**The second one deliberately did not pass.** A funding dataset materialized
-cleanly, then stopped one step short — the venue's documentation does not say
-whether its funding timestamp marks the *effective* or the *published* instant, no
-local evidence settles it, and those are different instants for anything that has to
-know what was knowable at decision time. Relaxing one confidence threshold would
-have produced a second green result. The gate held instead.
+#### Evidence that the gates actually bite
 
-**Two strategies have been through a preregistered backtest; both were falsified**
-and both are terminally closed, with full cost decomposition and failure attribution
-published — including one run that ends insolvent, reported rather than dropped.
-Neither can re-enter a promotion path: the closure registry fails closed and
-`reopen()` raises. A research process whose published output is only its successes
-provides no evidence that it can produce a negative result at all.
+A research process whose published output is only its successes provides no evidence
+that it can produce a negative result at all. Two cases are published in full for
+that reason.
 
-**Where it stands:** the machinery is built and proven end to end; the data estate
-it runs on is 1% certified. That, and not strategy generation, is the current work.
+**A dataset that stopped one step short.** A funding dataset materialized cleanly,
+then failed semantics certification — the venue's documentation does not say whether
+its funding timestamp marks the *effective* or the *published* instant, no local
+evidence settles it, and those are different instants for anything that has to know
+what was knowable at decision time. Relaxing one confidence threshold would have
+produced a second green result. The gate held instead.
+
+**Two strategies through a preregistered backtest, both falsified** and both
+terminally closed, with full cost decomposition and failure attribution published —
+including one run that ends insolvent, reported rather than dropped. Neither can
+re-enter a promotion path.
+
+**Where it stands:** the machinery is built and proven end to end, and the current
+work is certification coverage — the data estate it runs on is 1% certified, which is
+the constraint on how fast the rest can move.
 
 ## Documentation
 
