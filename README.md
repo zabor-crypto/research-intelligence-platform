@@ -14,6 +14,26 @@ Everything runs offline and deterministically by default: the LLM layer is
 replaceable and ships with a mock, all HTTP is mocked in tests, and the entire
 quickstart below works from a fresh clone with no API key.
 
+## Review the project in five minutes
+
+This public slice demonstrates research-software engineering: structured
+extraction, explicit rejection rules, testable handoff contracts and evidence
+boundaries. Boris Zabavnikov authored and maintains the release; private research
+inputs and strategy implementations are outside its scope.
+
+After installation, run one complete mock workflow in an isolated test workspace:
+
+```bash
+PYTHONPATH=src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/test_cli.py::test_full_mvp_flow -q -p no:cacheprovider
+```
+
+The test ingests the included examples, generates and ranks hypotheses, verifies
+rejected ideas stay out of candidate exports, and writes a handoff specification.
+It uses no API keys or market dataset and runs no economic backtest. Inspect
+[the test](tests/test_cli.py), then [the architecture](docs/01_architecture.md)
+and [the public process gates](src/research_process/). A valid specification is
+an input to later research, not evidence that a strategy works.
+
 ## Pipeline
 
 ```
@@ -168,8 +188,9 @@ This repository is a **curated, self-contained public release** of the
 infrastructure-and-methodology layer of a larger private research system. It is
 authored and maintained by one person (Boris Zabavnikov).
 
-- **Tests:** 324 passing pytest cases (264 `def test_` functions; the difference
-  is test parametrization), run fully offline. CI runs ruff + pytest.
+- **Validation:** CI runs ruff + pytest offline. Test totals and outcomes belong
+  to the exact commit and command that produced them; the focused workflow above
+  is an entry point, not a substitute for the full suite.
 - **What is public here:** the pipeline, the replaceable LLM layer, the
   code-enforced non-HFT filters, the 12-dimension scoring, the evaluation
   benchmark, eight enforcement gates from the research-process layer, the CLI,
